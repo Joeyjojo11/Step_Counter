@@ -142,16 +142,11 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
                     TextView tv = (TextView) findViewById(R.id.Current_Count);
                     tv.setText(Integer.toString(stepCount));
 
-
                 }
             });
 
 
-
-
         }
-
-
 
     }
 
