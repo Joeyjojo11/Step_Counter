@@ -82,11 +82,11 @@ public class Activity extends ListActivity {
         // Defined Array values to show in ListView
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+      //  ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+       //         android.R.layout.simple_list_item_1, android.R.id.text1, values);
 
         // Assign adapter to ListView
-        list2.setAdapter(adapter);
+    //    list2.setAdapter(adapter);
 
         //  Viewall.setOnClickListener(
               //  new Button.OnClickListener() {
