@@ -13,4 +13,12 @@
     <string name="view_all">View all</string>
     <string name="number_of_steps">Number of Steps</string>
     <string name="total_steps">Total Steps</string>
+    <string name="delete">Delete</string>
+    <string name="delete_by_id">delete by ID</string>
+    <string name="steps">Steps</string>
+    <string name="total_steps1">Total Steps</string>
+    <string name="steps1">Steps</string>
+    <string name="averaging">Averaging</string>
+    <string name="from">From</string>
+    <string name="activities">Activities</string>
 </resources>

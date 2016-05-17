@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Context;
 import android.hardware.*;
+import android.text.format.Time;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,6 +33,7 @@ import android.os.SystemClock;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -64,6 +67,8 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     boolean activityRunning;
     public boolean active = false; //Used to checked if the counter is running
     public boolean isInserted =false;
+    String StartTime2 = "";
+    int[] NumSteps2 = {0};
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -111,25 +116,28 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
         //Step counting and other calculations start when user presses "start" button
         final Button b_Start = (Button) findViewById(R.id.b_Start);
         if (b_Start != null) {
-            final String[] StartTime2 = {"test"};
-            final int[] NumSteps2 = {0};
+
             b_Start.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (!active) {
                         b_Start.setText("Finish");
+                        b_Start.setBackgroundColor(Color.parseColor("#F44336"));
                         sensorManager.registerListener(MainActivity.this, stepDetectorSensor, SensorManager.SENSOR_DELAY_NORMAL);
-                        //StartTime2 = getDateTime();
-                        //StartTime2.getText().toString();
-                        //String contactEmail = emailEditText.getText().toString();
-
+                        StartTime2 = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
                         active = true;
-                    } else {
-                        b_Start.setText(R.string.start);
+                        View b = findViewById(R.id.b_History);
+                        b.setVisibility(View.GONE);
+
+                    }
+
+                    else {
+                        b_Start.setText("Start");
+                        b_Start.setBackgroundColor(Color.parseColor("#A4C639"));
                         NumSteps2[0] = stepCount;
 
                         sensorManager.unregisterListener(MainActivity.this, stepDetectorSensor);
-                        isInserted = myDB.insertData(StartTime2[0], NumSteps2[0]);
+                        isInserted = myDB.insertData(StartTime2, NumSteps2[0]);
                         if (isInserted = true)
                             Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
                         else
@@ -137,6 +145,8 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
 
                         active = false;
                         UpdateCounters();
+                        View b = findViewById(R.id.b_History);
+                        b.setVisibility(View.VISIBLE);
                     }
                     stepCount = 0;
                     TextView tv = (TextView) findViewById(R.id.Current_Count);
@@ -176,6 +186,10 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
             TempNumOfActivities = NumOfActivities;
             TempTotalCount = TotalCount;
             Avg = TempTotalCount / TempNumOfActivities;
+            //Convert the Float to a String to limit the value to 2 decimal places
+            String str = String.format("%1.2f", Avg);
+            //convert it Back to a Double
+            Avg = Float.valueOf(str);
             TextView tv2 = (TextView) findViewById(R.id.Average);
             tv2.setText(Float.toString(Avg));
         }
@@ -190,9 +204,6 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
 
     //      }
     // );
-
-
-
 
 
 
@@ -218,21 +229,9 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
 
     }
 
- //   private String getDateTime() {
-   //     SimpleDateFormat dateFormat = new SimpleDateFormat(
-    //            "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-    //    Date date = new Date();
-    //    return dateFormat.format(date);
-  //  }
-
-
     @Override
     protected void onPause() {
         super.onPause();
-        //Count.close();
-        activityRunning = false;
-        // if you unregister the last listener, the hardware will stop detecting step events
-        //sensorManager.unregisterListener(this);
     }
 
     @Override

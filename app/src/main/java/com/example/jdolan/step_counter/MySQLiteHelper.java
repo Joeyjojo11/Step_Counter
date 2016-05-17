@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.File;
@@ -33,7 +34,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     //private static final String KEY_DISTANCE = "distanceTravelled";
 
     public boolean TableCreated =false;
-
+    private SQLiteDatabase database;
     //private static final String[] COLUMNS = {COLUMN_ID, KEY_STARTTIME, KEY_ENDTIME, KEY_NUMSTEPS, KEY_NUMSECONDS, KEY_DISTANCE};
 
     public MySQLiteHelper(Context context) {
@@ -120,6 +121,23 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         // return count
        // return cursor.getCount();
     }
+
+   // public void deleteContact(View view) {
+     //   int idToDelete = 0;
+
+        // Get the id to delete
+    //    String id = idToDelete.toString();
+//
+        // Delete matching id in database
+     //   database.execSQL("DELETE FROM contacts WHERE id = " + id + ";");
+
+    //}
+   // public void deleteByID(Step_History Steps) {
+  //      long id = Steps.getId();
+  //      System.out.println("Comment deleted with id: " + id);
+   //     database.delete(MySQLiteHelper.TABLE_NAME, MySQLiteHelper.COLUMN_ID
+   //             + " = " + id, null);
+  //  }
 
 
 

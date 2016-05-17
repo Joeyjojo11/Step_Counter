@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -44,13 +45,29 @@ public class Activity extends ListActivity {
         setContentView(R.layout.activity_history);
 
         Button Back = (Button) findViewById(R.id.button4);
+        Button Delete = (Button) findViewById(R.id.b_delete);
         myDB = new MySQLiteHelper(this);
+
+        final ArrayList<String> list = new ArrayList<String>();
+
+        list.add ("DATE       :   STEPS");
 
         list2 = (ListView) findViewById(android.R.id.list);
         //Cursor res = =MA.getAllData();
-        getAllData();
-        ListAdapter ListAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
-        list2.setAdapter(ListAdapter);
+        Cursor res = getAllData();
+
+       // String[] buffer = new String[10];
+       // while (res.moveToNext()){
+       //     buffer.append(res.getString(0) + " " );
+       //     buffer.append(res.getString(1) + " ");
+      //      buffer.append(res.getString(2) + "\n");
+            //buffer.append("Marks: " + res.getString(3) + "\n\n");
+      //  }
+
+       //listview.setOnItemClickListener(new AdapterVi
+        //ListAdapter ListAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
+        //list2.setAdapter(ListAdapter);
+
 
 
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -61,6 +78,23 @@ public class Activity extends ListActivity {
                 MainPage(v);
             }
         });
+
+        // Defined Array values to show in ListView
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+
+        // Assign adapter to ListView
+        list2.setAdapter(adapter);
+
+        //  Viewall.setOnClickListener(
+              //  new Button.OnClickListener() {
+                //    public void onClick(View v) {
+                //        myDB.deleteByID();
+                //    }
+               // });
+
 
 
 
@@ -90,12 +124,12 @@ public class Activity extends ListActivity {
     }
 
 
-    public void getAllData() {
+    public Cursor getAllData() {
         Cursor res = myDB.databaseToString();
         if(res.getCount() == 0){
             //Show no data message
             showMessage("Error", "No Data Found");
-            return;
+            return null;
         }
 
         StringBuffer buffer = new StringBuffer();
@@ -105,8 +139,10 @@ public class Activity extends ListActivity {
             buffer.append(res.getString(2) + "\n");
             //buffer.append("Marks: " + res.getString(3) + "\n\n");
         }
+        return res;
+        //showMessage("Data", buffer.toString());
 
-        showMessage("Data", buffer.toString());
+
     }
 
     public void showMessage(String title, String Message){
@@ -115,6 +151,15 @@ public class Activity extends ListActivity {
         builder.setTitle(title);
         builder.setMessage(Message);
         builder.show();
+    }
+
+    public void populateListView() {
+        String[] values =  new String[] { myDB.COLUMN_ID,myDB.COLUMN_STARTTIME,myDB.COLUMN_COMMENT
+        };
+        SimpleCursorAdapter myCursorAdapter;
+        myCursorAdapter = new SimpleCursorAdapter(getBaseContext(),android.R.layout.simple_list_item_1, res, values,0);
+
+
     }
 
 
