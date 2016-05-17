@@ -1,43 +1,19 @@
 package com.example.jdolan.step_counter;
 
-import android.app.AlertDialog;
-import android.app.FragmentHostCallback;
-import android.app.Fragment;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Context;
 import android.hardware.*;
-import android.text.format.Time;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.example.jdolan.step_counter.MySQLiteHelper;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.SystemClock;
 
-
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-
-import com.example.jdolan.step_counter.CountDataSource;
 
 public class MainActivity extends AppCompatActivity  implements SensorEventListener {
 
@@ -70,11 +46,7 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     String StartTime2 = "";
     int[] NumSteps2 = {0};
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+
     private SharedPreferences sharedPreferences;
 
 
@@ -84,7 +56,6 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
 
         //sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         setContentView(R.layout.activity_main);
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
         //Start = (Button) findViewById(R.id.b_Start);
         History = (Button) findViewById(R.id.b_History);
@@ -196,20 +167,8 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     }
 
 
-    //   Viewall.setOnClickListener(
-    //        new Button.OnClickListener(){
-    //  public void onClick(View v){
-    //    myDB.checkDataBase();
-    // }
-
-    //      }
-    // );
-
-
-
-
     public void History(View v1) {
-        Intent A2Intent = new Intent (v1.getContext(), Activity.class);
+        Intent A2Intent = new Intent (v1.getContext(), HistoryActivity.class);
         // start the next activity/page
         startActivity(A2Intent);
     }
@@ -256,40 +215,13 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     public void onStart() {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction2 = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.example.jdolan.step_counter/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction2);
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction2 = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.example.jdolan.step_counter/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction2);
-        client.disconnect();
+
     }
 
 }

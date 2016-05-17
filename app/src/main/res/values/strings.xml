@@ -21,4 +21,12 @@
     <string name="averaging">Averaging</string>
     <string name="from">From</string>
     <string name="activities">Activities</string>
+
+    <string name="some_text">
+     Step History!
+ </string>
+ <string name="some_hint">
+  Type here to filter&#8230;
+ </string>
+
 </resources>
