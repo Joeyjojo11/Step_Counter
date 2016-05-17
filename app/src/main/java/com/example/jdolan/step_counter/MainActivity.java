@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
 
     //SQLiteDatabase Step_History = null;
     MySQLiteHelper myDB;
-    private CountDataSource datasource;
 
     private SensorManager sensorManager;
     private Sensor stepDetectorSensor;
@@ -33,6 +32,8 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     public int NumOfActivities = 0;
     public float TempTotalCount = 0;
     public float TempNumOfActivities = 0;
+
+    private MenuItem historyMenu;
 
     private int counterSteps = 0;
     private int stepDetector = 0;
@@ -60,7 +61,6 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
         setContentView(R.layout.activity_main);
 
         //Start = (Button) findViewById(R.id.b_Start);
-        History = (Button) findViewById(R.id.b_History);
         Total_Count = (TextView) findViewById(R.id.Total_Count);
         Count = (TextView) findViewById(R.id.Current_Count);
         Average = (TextView) findViewById(R.id.Average);
@@ -78,14 +78,6 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
         // ATTENTION: This was auto-generated to implement the App Indexing API.
 
 
-        History.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                History(v);
-            }
-        });
-
-
         //Step counting and other calculations start when user presses "start" button
         final Button b_Start = (Button) findViewById(R.id.b_Start);
         if (b_Start != null) {
@@ -99,8 +91,8 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
                         sensorManager.registerListener(MainActivity.this, stepDetectorSensor, SensorManager.SENSOR_DELAY_NORMAL);
                         StartTime2 = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
                         active = true;
-                        View b = findViewById(R.id.b_History);
-                        b.setVisibility(View.GONE);
+
+                        historyMenu.setEnabled(false);
 
                     }
 
@@ -117,9 +109,9 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
                             Toast.makeText(MainActivity.this, "Failure", Toast.LENGTH_SHORT).show();
 
                         active = false;
+                        historyMenu.setEnabled(true);
+
                         UpdateCounters();
-                        View b = findViewById(R.id.b_History);
-                        b.setVisibility(View.VISIBLE);
                     }
                     stepCount = 0;
                     TextView tv = (TextView) findViewById(R.id.Current_Count);
@@ -144,6 +136,8 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
 //        int itemId = Menu.FIRST;
 //        int order = 103;
 //        menu.add(groupId,itemId,order,title);
+        historyMenu=menu.getItem(1);
+
         return true;
 
     }

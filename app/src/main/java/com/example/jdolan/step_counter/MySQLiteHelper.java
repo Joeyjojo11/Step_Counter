@@ -93,6 +93,18 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     }
 
+    public boolean deleteData(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int result = db.delete(TABLE_NAME,"_id=?", new String[] {id});
+
+        if(result ==0 )
+            return false;
+        else
+            return true;
+
+
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

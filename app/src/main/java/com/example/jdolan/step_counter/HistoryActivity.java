@@ -2,17 +2,21 @@ package com.example.jdolan.step_counter;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -23,10 +27,10 @@ import java.util.ArrayList;
  * Created by jdolan on 26/04/16.
  */
 public class HistoryActivity extends AppCompatActivity {
-    private CountDataSource datasource;
     public EditText userText = null;
 
     private SimpleCursorAdapter dataAdapter;
+
 
 
     /**
@@ -54,8 +58,54 @@ public class HistoryActivity extends AppCompatActivity {
         });
         displayListView();
 
+        final ListView listView = (ListView) findViewById(R.id.listView1);
+             
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long arg3) {
+
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(HistoryActivity.this);
+                builder1.setMessage("Are you sure you want to delete this entry");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int itemid) {
+                                Cursor cursor2 = myDB.databaseToString();
+
+                                cursor2.moveToPosition(position);
+                                int id= cursor2.getInt(cursor2.getColumnIndex("_id"));
+
+                                myDB.deleteData(Integer.toString(id));
+                                Toast.makeText(HistoryActivity.this, "Item Deleted: ", Toast.LENGTH_SHORT).show();
+                                displayListView();
+
+                                dialog.cancel();
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+
+
+                return true ;
+            }
+
+        });
+
 
     }
+
 
 
     public boolean onCreateOptionsMenu(Menu menu){
@@ -105,6 +155,7 @@ public class HistoryActivity extends AppCompatActivity {
                 R.id.TextView_numSteps,
         };
 
+        ListView listView = (ListView) findViewById(R.id.listView1);
 
         // create the adapter using the cursor pointing to the desired data
         //as well as the layout information
@@ -116,7 +167,7 @@ public class HistoryActivity extends AppCompatActivity {
                 0);
 
 
-        ListView listView = (ListView) findViewById(R.id.listView1);
+
         // Assign adapter to ListView
         listView.setAdapter(dataAdapter);
 

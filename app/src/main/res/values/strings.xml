@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Step_Counter</string>
+    <string name="app_name">Joes Step Counter</string>
     <string name="average_step_count">Average Step count:</string>
     <string name="total_step_count">Total Step count:</string>
     <string name="back">Back</string>
