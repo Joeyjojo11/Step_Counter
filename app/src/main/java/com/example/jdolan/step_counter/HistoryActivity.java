@@ -31,6 +31,9 @@ public class HistoryActivity extends AppCompatActivity {
 
     private SimpleCursorAdapter dataAdapter;
 
+    private MenuItem historyMenu;
+    private MenuItem homeMenu;
+
 
 
     /**
@@ -118,7 +121,11 @@ public class HistoryActivity extends AppCompatActivity {
 //        int itemId = Menu.FIRST;
 //        int order = 103;
 //        menu.add(groupId,itemId,order,title);
+        historyMenu = menu.getItem(1);
+        menu.getItem(1).setVisible(false);
+
         return true;
+
 
     }
 

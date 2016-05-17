@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     public float TempNumOfActivities = 0;
 
     private MenuItem historyMenu;
+    private MenuItem homeMenu;
 
     private int counterSteps = 0;
     private int stepDetector = 0;
@@ -136,7 +137,11 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
 //        int itemId = Menu.FIRST;
 //        int order = 103;
 //        menu.add(groupId,itemId,order,title);
+        homeMenu=menu.getItem(0);
         historyMenu=menu.getItem(1);
+
+        homeMenu.setEnabled(false);
+        homeMenu.setVisible(false);
 
         return true;
 
