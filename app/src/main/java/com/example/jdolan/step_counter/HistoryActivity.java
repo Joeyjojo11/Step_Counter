@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,6 +57,35 @@ public class HistoryActivity extends AppCompatActivity {
 
     }
 
+
+    public boolean onCreateOptionsMenu(Menu menu){
+
+        super.onCreateOptionsMenu(menu);
+
+        getMenuInflater().inflate(R.menu.main, menu);
+//        String title = "Additonal Menu";
+//        int groupId = Menu.NONE;
+//        int itemId = Menu.FIRST;
+//        int order = 103;
+//        menu.add(groupId,itemId,order,title);
+        return true;
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        super.onOptionsItemSelected(item);
+
+        switch (item.getItemId()){
+            case R.id.menu_home:
+                View v = new View(this);
+                MainPage(v);
+            case R.id.menu_history:
+                //
+        }
+
+        //Toast.makeText(this, "Menus item selected: " + item.getItemId(), Toast.LENGTH_SHORT).show();
+        return true;
+    }
 
     private void displayListView(){
 

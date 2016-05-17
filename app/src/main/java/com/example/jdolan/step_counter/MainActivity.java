@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Context;
 import android.hardware.*;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -129,6 +131,36 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
 
         }
 
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu){
+
+        super.onCreateOptionsMenu(menu);
+
+        getMenuInflater().inflate(R.menu.main, menu);
+//        String title = "Additonal Menu";
+//        int groupId = Menu.NONE;
+//        int itemId = Menu.FIRST;
+//        int order = 103;
+//        menu.add(groupId,itemId,order,title);
+        return true;
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        super.onOptionsItemSelected(item);
+
+        switch (item.getItemId()){
+            case R.id.menu_home:
+                // Do something
+            case R.id.menu_history:
+                View v = new View(this);
+                History(v);
+        }
+
+        //Toast.makeText(this, "Menus item selected: " + item.getItemId(), Toast.LENGTH_SHORT).show();
+        return true;
     }
 
     public void checkdb (){
